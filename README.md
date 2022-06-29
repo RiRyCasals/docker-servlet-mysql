@@ -9,7 +9,7 @@ Dockerfileを書き換えた場合 `docker compose up -d --build` でコンテ�
 
 ## コンパイル
 
-1. コンテナが起動した状態で `docker exec -it tomcat_server bash` を行いbashに入る
+1. コンテナが起動した状態で `docker exec -it tomcat_server bash` を行いtomcat用コンテナ内のbashに入る
 2. `sh webapps/Sample/WEB-INF/compile.sh` でコンパイルを行う（サンプル以外は適宜パスなど変更）
 3. `exit` で bash を終了する
 
@@ -39,3 +39,15 @@ Dockerfileを書き換えた場合 `docker compose up -d --build` でコンテ�
 ローカル環境の `webapps` ディレクトリが tomcat用コンテナの `/usr/local/tomcat/webapps` にボリュームしてある．
 
 `webapps/Sample` が基本的なディレクトリ構成になるため参考にされたし．
+
+
+# DBのテーブル作成について
+
+## init.sql
+
+初回コンテナ起動時のテーブル作成やデータ挿入用のSQLを記入できる．
+
+## interactive
+
+1. `docker exec -it mysql_server bash` でMySQL用コンテナ内のbashに入る
+2. `mysql -u root -p` でパスワードを打ち込み対話型モードに入る
