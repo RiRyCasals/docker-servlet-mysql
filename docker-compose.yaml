@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    container_name: tomcat_server
+    build:
+      context: .
+      dockerfile: ./Dockerfile.app
+    ports:
+      - 8080:8080
+    volumes:
+      - ./webapps:/usr/local/tomcat/webapps
+    depends_on:
+      - db
+  db:
+    container_name: mysql_server
+    image: mysql:8.0.29-debian
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=sample
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
